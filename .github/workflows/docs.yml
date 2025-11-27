@@ -1,0 +1,46 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'packages/core/src/**'
+      - 'packages/core/typedoc.json'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build core package
+        run: cd packages/core && npm run build
+
+      - name: Generate docs
+        run: cd packages/core && npm run docs
+
+      - name: Deploy to docs branch
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./packages/core/docs
+          destination_dir: ./docs
+          keep_files: false
