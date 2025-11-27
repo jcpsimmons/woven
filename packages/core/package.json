@@ -1,0 +1,62 @@
+{
+  "name": "storyloom",
+  "version": "0.3.0",
+  "description": "Core engine for Storyloom interactive storytelling framework",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "storytelling",
+    "interactive-fiction",
+    "narrative",
+    "game-engine",
+    "branching-narrative",
+    "typescript",
+    "storyloom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcpsimmons/storyloom.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/jcpsimmons/storyloom#readme",
+  "bugs": {
+    "url": "https://github.com/jcpsimmons/storyloom/issues"
+  },
+  "author": "Josh Simmons <jcpsimmons@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "docs": "typedoc",
+    "docs:build": "typedoc && echo 'Documentation built in docs/'",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.0.0"
+  }
+}

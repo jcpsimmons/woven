@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+.vite
+.env
+.env.local
+docs/
+packages/dev-ui/public/
