@@ -6,8 +6,8 @@ A powerful TypeScript framework for creating interactive storytelling experience
 
 This monorepo contains:
 
-- **[@storyloom/core](./packages/core)** - Core storytelling engine (published to npm)
-- **[@storyloom/dev-ui](./packages/dev-ui)** - Development UI for testing stories (private)
+- **[storyloom](./packages/core)** - Core storytelling engine (published to npm)
+- **[dev-ui](./packages/dev-ui)** - Development UI for testing stories (private)
 
 ## Development
 

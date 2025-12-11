@@ -35,17 +35,17 @@ export function createRuntime<TEffect, TState>(
       if (hook) {
         return hook(state);
       }
-      // If hook missing, what to do? Default to false? Or throw?
-      // Assuming false for safety, or we could warn.
-      console.warn(`Condition hook "${condition.name}" not found.`);
-      return false;
+      throw new Error(
+        `Condition hook "${condition.name}" not found. Register it via RuntimeOptions.conditionHooks.`
+      );
     } else if (condition.type === 'expression') {
       const evaluator = options?.expressionEvaluator;
       if (evaluator) {
         return evaluator(condition.expr, state);
       }
-      console.warn(`Expression evaluator not provided for expr: "${condition.expr}"`);
-      return false;
+      throw new Error(
+        `Expression evaluator not provided for expr: "${condition.expr}". Register it via RuntimeOptions.expressionEvaluator.`
+      );
     }
     return true;
   }

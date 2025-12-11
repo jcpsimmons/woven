@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createRuntime, Story, StepResult } from '@storyloom/core';
+import { createRuntime, Story, StepResult } from 'storyloom';
 import { Button, Card } from '@blueprintjs/core';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -598,7 +598,7 @@ function App() {
             <Button
               icon="git-repo"
               text="GitHub"
-              onClick={() => window.open('https://github.com/jcpsimmons/woven', '_blank')}
+              onClick={() => window.open('https://github.com/jcpsimmons/storyloom', '_blank')}
               large
             />
             <Button

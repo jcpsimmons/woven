@@ -1,17 +1,17 @@
-# @storyloom/core
+# storyloom
 
 Core engine for Storyloom interactive storytelling framework.
 
 ## Installation
 
 ```bash
-npm install @storyloom/core
+npm install storyloom
 ```
 
 ## Usage
 
 ```typescript
-import { createRuntime, Story } from '@storyloom/core';
+import { createRuntime, Story } from 'storyloom';
 
 // Define your story
 const story: Story<any> = {
@@ -86,9 +86,20 @@ Jumps to a specific knot and node in the story.
 
 Analyzes a story for potential issues.
 
+## Error Handling
+
+The runtime throws descriptive errors when:
+
+- A referenced knot or node doesn't exist
+- A choice ID is not found
+- A condition hook is referenced but not registered
+- An expression evaluator is needed but not provided
+
+This fail-fast behavior helps catch story structure issues during development.
+
 ## Documentation
 
-For full documentation and examples, visit [GitHub](https://github.com/jcpsimmons/woven).
+For full documentation and examples, visit [GitHub](https://github.com/jcpsimmons/storyloom).
 
 ## License
 

@@ -4,11 +4,11 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/woven/',
+  base: '/storyloom/',
   plugins: [react()],
   resolve: {
     alias: {
-      '@storyloom/core': path.resolve(__dirname, '../core/src'),
+      storyloom: path.resolve(__dirname, '../core/src'),
     },
   },
 });

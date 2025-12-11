@@ -1,7 +1,7 @@
 {
-  "name": "@woven/core",
+  "name": "storyloom",
   "version": "0.1.0",
-  "description": "Core engine for Woven interactive storytelling framework",
+  "description": "Core engine for Storyloom interactive storytelling framework",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,16 +28,16 @@
     "game-engine",
     "branching-narrative",
     "typescript",
-    "woven"
+    "storyloom"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jcpsimmons/woven.git",
+    "url": "https://github.com/jcpsimmons/storyloom.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/jcpsimmons/woven#readme",
+  "homepage": "https://github.com/jcpsimmons/storyloom#readme",
   "bugs": {
-    "url": "https://github.com/jcpsimmons/woven/issues"
+    "url": "https://github.com/jcpsimmons/storyloom/issues"
   },
   "author": "Josh Simmons <jcpsimmons@gmail.com>",
   "license": "MIT",
