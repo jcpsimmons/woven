@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createRuntime, Story, StepResult } from '@storyloom/core';
+import { Button, Card, Navbar, NavbarGroup, NavbarHeading } from '@blueprintjs/core';
 
 // Example Story - Prison Escape Adventure
 const exampleStory: Story<{
@@ -575,89 +576,75 @@ function App() {
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+    <div className="app-container">
       {/* Navigation Header */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px',
-          paddingBottom: '15px',
-          borderBottom: '2px solid #ccc',
-        }}
-      >
-        <div>
-          <h1 style={{ margin: 0 }}>Storyloom Dev UI</h1>
-          <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '14px' }}>
-            Interactive Storytelling Engine Demo
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '15px' }}>
-          <a
-            href="https://github.com/jcpsimmons/woven"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '8px 16px',
-              background: '#24292e',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
-            }}
-          >
-            📦 GitHub Repo
-          </a>
-          <a
-            href="https://blog.drjoshcsimmons.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '8px 16px',
-              background: '#0969da',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
-            }}
-          >
-            ✍️ Blog
-          </a>
-        </div>
-      </div>
+      <Navbar className="app-header">
+        <NavbarGroup>
+          <NavbarHeading>
+            <div>
+              <h1>Storyloom Dev UI</h1>
+              <p>Interactive Storytelling Engine Demo</p>
+            </div>
+          </NavbarHeading>
+        </NavbarGroup>
+        <NavbarGroup align="right" className="header-links">
+          <Button
+            minimal
+            icon="git-repo"
+            text="GitHub Repo"
+            onClick={() => window.open('https://github.com/jcpsimmons/woven', '_blank')}
+          />
+          <Button
+            minimal
+            icon="edit"
+            text="Blog"
+            onClick={() => window.open('https://blog.drjoshcsimmons.com', '_blank')}
+          />
+        </NavbarGroup>
+      </Navbar>
 
-      <div style={{ display: 'flex', gap: '20px' }}>
-        <div style={{ flex: 1, border: '1px solid #ccc', padding: '20px' }}>
-          <h2>Story</h2>
-          {step.text.map((t, i) => (
-            <p key={i}>{t}</p>
-          ))}
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
-            {step.choices.map((c) => (
-              <button key={c.id} onClick={() => handleChoice(c.id)} style={{ padding: '10px' }}>
-                {c.label}
-              </button>
+      <div className="content-wrapper">
+        <Card className="story-panel" elevation={2}>
+          <div className="story-section">
+            <h2>Story</h2>
+            {step.text.map((t, i) => (
+              <p key={i}>{t}</p>
             ))}
+
+            <div className="choice-buttons">
+              {step.choices.map((c) => (
+                <Button
+                  key={c.id}
+                  intent="primary"
+                  large
+                  onClick={() => handleChoice(c.id)}
+                  text={c.label}
+                />
+              ))}
+            </div>
+
+            {step.ending && (
+              <div className="ending-display">
+                <h2>The End</h2>
+                <p>{step.ending.label || step.ending.id}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        <Card className="state-panel" elevation={2}>
+          <div className="debug-section">
+            <h2>State</h2>
+            <pre>{JSON.stringify(gameState, null, 2)}</pre>
           </div>
 
-          {step.ending && (
-            <div style={{ marginTop: '20px', fontWeight: 'bold' }}>
-              Ending: {step.ending.label || step.ending.id}
-            </div>
-          )}
-        </div>
-
-        <div style={{ width: '300px', border: '1px solid #ccc', padding: '20px' }}>
-          <h2>State</h2>
-          <pre>{JSON.stringify(gameState, null, 2)}</pre>
-
-          <h3>Current Step Debug</h3>
-          <pre style={{ fontSize: '0.8em', overflow: 'auto' }}>
-            {JSON.stringify({ ...step, choices: step.choices.map((c) => c.id) }, null, 2)}
-          </pre>
-        </div>
+          <div className="debug-section">
+            <h3>Current Step Debug</h3>
+            <pre>
+              {JSON.stringify({ ...step, choices: step.choices.map((c) => c.id) }, null, 2)}
+            </pre>
+          </div>
+        </Card>
       </div>
     </div>
   );

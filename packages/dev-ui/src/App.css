@@ -1,0 +1,180 @@
+/* Mobile-first responsive styles for Storyloom Dev UI */
+
+/* Base layout - mobile (< 480px) */
+.app-container {
+  padding: 15px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.app-header {
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  margin: 0 0 5px 0;
+  font-size: 24px;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--bp5-text-color-muted);
+}
+
+.header-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+}
+
+/* State panel appears above story on mobile */
+.state-panel {
+  width: 100%;
+}
+
+.story-panel {
+  width: 100%;
+}
+
+.story-section {
+  margin-bottom: 25px;
+}
+
+.story-section h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.choice-buttons .bp5-button {
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.ending-display {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: var(--bp5-intent-success);
+  color: white;
+}
+
+.ending-display h2 {
+  margin-top: 0;
+  color: white;
+}
+
+.debug-section {
+  margin-top: 20px;
+}
+
+.debug-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.debug-section pre {
+  background-color: var(--bp5-dark-gray5);
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Tablet (480px - 768px) */
+@media (min-width: 480px) {
+  .app-container {
+    padding: 25px;
+  }
+
+  .app-header h1 {
+    font-size: 28px;
+  }
+
+  .header-links {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .story-section h2 {
+    font-size: 22px;
+  }
+
+  .debug-section h3 {
+    font-size: 18px;
+  }
+
+  .debug-section pre {
+    font-size: 13px;
+  }
+}
+
+/* Desktop (> 768px) */
+@media (min-width: 768px) {
+  .app-container {
+    padding: 30px;
+    max-width: 1400px;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .header-links {
+    margin-top: 0;
+  }
+
+  .content-wrapper {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .story-panel {
+    flex: 1;
+  }
+
+  .state-panel {
+    width: 350px;
+    flex-shrink: 0;
+  }
+
+  .choice-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .choice-buttons .bp5-button {
+    width: auto;
+    flex: 1 1 calc(50% - 5px);
+    min-width: 200px;
+  }
+}
+
+/* Large desktop (> 1200px) */
+@media (min-width: 1200px) {
+  .state-panel {
+    width: 400px;
+  }
+}
