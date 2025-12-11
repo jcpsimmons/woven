@@ -1,5 +1,5 @@
 {
-  "name": "@knotwork/dev-ui",
+  "name": "@storyloom/dev-ui",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@knotwork/core": "file:../core",
+    "@storyloom/core": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

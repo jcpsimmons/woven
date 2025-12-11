@@ -1,12 +1,41 @@
 {
-  "name": "@knotwork/core",
+  "name": "@storyloom/core",
   "version": "0.1.0",
-  "description": "Core engine for Knotwork interactive storytelling",
+  "description": "Core engine for Storyloom interactive storytelling framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "storytelling",
+    "interactive-fiction",
+    "narrative",
+    "game-engine",
+    "branching-narrative",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcpsimmons/woven.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/jcpsimmons/woven#readme",
+  "bugs": {
+    "url": "https://github.com/jcpsimmons/woven/issues"
+  },
+  "author": "Josh Simmons <jcpsimmons@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build && npm test"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

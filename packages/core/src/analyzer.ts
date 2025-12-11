@@ -1,11 +1,7 @@
-import {
-  Story,
-  NodeId,
-  KnotId
-} from "./types";
+import { Story, NodeId, KnotId } from './types';
 
 export interface AnalysisIssue {
-  code: "INESCAPABLE_LOOP" | "DEAD_END" | "UNREACHABLE";
+  code: 'INESCAPABLE_LOOP' | 'DEAD_END' | 'UNREACHABLE';
   pathExample: NodeId[];
   scc?: NodeId[]; // for loops
   message: string;
@@ -27,7 +23,7 @@ export function analyzeStory<TEffect>(story: Story<TEffect>): AnalysisResult {
   // Helper to make unique ID
   const uId = (k: KnotId, n: NodeId) => `${k}:${n}`;
   const parseUid = (u: string) => {
-    const parts = u.split(":");
+    const parts = u.split(':');
     return { knotId: parts[0], nodeId: parts[1] };
   };
 
@@ -66,9 +62,9 @@ export function analyzeStory<TEffect>(story: Story<TEffect>): AnalysisResult {
     visited.add(entryUid);
   } else {
     issues.push({
-        code: "UNREACHABLE",
-        pathExample: [],
-        message: `Entry node ${entryUid} does not exist.`
+      code: 'UNREACHABLE',
+      pathExample: [],
+      message: `Entry node ${entryUid} does not exist.`,
     });
   }
 
@@ -76,39 +72,40 @@ export function analyzeStory<TEffect>(story: Story<TEffect>): AnalysisResult {
     const curr = queue.shift()!;
     const neighbors = adjacency.get(curr) || [];
     for (const next of neighbors) {
-        // Note: next might point to a non-existent node, we should probably check that somewhere?
-        // But for reachability, if it's in allNodes, we mark it.
-        if (allNodes.has(next) && !visited.has(next)) {
-            visited.add(next);
-            queue.push(next);
-        }
+      // Note: next might point to a non-existent node, we should probably check that somewhere?
+      // But for reachability, if it's in allNodes, we mark it.
+      if (allNodes.has(next) && !visited.has(next)) {
+        visited.add(next);
+        queue.push(next);
+      }
     }
   }
 
   for (const u of allNodes) {
     if (!visited.has(u)) {
-        const { knotId, nodeId } = parseUid(u);
-        issues.push({
-            code: "UNREACHABLE",
-            pathExample: [nodeId], // Just the node itself as example
-            message: `Node ${knotId}.${nodeId} is unreachable from start.`
-        });
+      const { knotId, nodeId } = parseUid(u);
+      issues.push({
+        code: 'UNREACHABLE',
+        pathExample: [nodeId], // Just the node itself as example
+        message: `Node ${knotId}.${nodeId} is unreachable from start.`,
+      });
     }
   }
 
   // 3. Dead ends
   // Nodes with no outgoing edges, not marked as ending.
   for (const u of allNodes) {
-    if (visited.has(u)) { // Only care about reachable nodes
-        const outgoing = adjacency.get(u) || [];
-        if (outgoing.length === 0 && !terminalNodes.has(u)) {
-            const { knotId, nodeId } = parseUid(u);
-            issues.push({
-                code: "DEAD_END",
-                pathExample: [nodeId],
-                message: `Node ${knotId}.${nodeId} is a dead end (no choices and not an ending).`
-            });
-        }
+    if (visited.has(u)) {
+      // Only care about reachable nodes
+      const outgoing = adjacency.get(u) || [];
+      if (outgoing.length === 0 && !terminalNodes.has(u)) {
+        const { knotId, nodeId } = parseUid(u);
+        issues.push({
+          code: 'DEAD_END',
+          pathExample: [nodeId],
+          message: `Node ${knotId}.${nodeId} is a dead end (no choices and not an ending).`,
+        });
+      }
     }
   }
 
@@ -135,31 +132,31 @@ export function analyzeStory<TEffect>(story: Story<TEffect>): AnalysisResult {
 
     const neighbors = adjacency.get(v) || [];
     for (const w of neighbors) {
-        if (!visited.has(w)) continue; // Ignore edges to unreachable nodes (though strictly if v is reachable w should be too if edge exists)
+      if (!visited.has(w)) continue; // Ignore edges to unreachable nodes (though strictly if v is reachable w should be too if edge exists)
 
-        if (!indices.has(w)) {
-            strongConnect(w);
-            lowLink.set(v, Math.min(lowLink.get(v)!, lowLink.get(w)!));
-        } else if (onStack.has(w)) {
-            lowLink.set(v, Math.min(lowLink.get(v)!, indices.get(w)!));
-        }
+      if (!indices.has(w)) {
+        strongConnect(w);
+        lowLink.set(v, Math.min(lowLink.get(v)!, lowLink.get(w)!));
+      } else if (onStack.has(w)) {
+        lowLink.set(v, Math.min(lowLink.get(v)!, indices.get(w)!));
+      }
     }
 
     if (lowLink.get(v) === indices.get(v)) {
-        const scc: string[] = [];
-        let w: string;
-        do {
-            w = stack.pop()!;
-            onStack.delete(w);
-            scc.push(w);
-        } while (w !== v);
-        sccs.push(scc);
+      const scc: string[] = [];
+      let w: string;
+      do {
+        w = stack.pop()!;
+        onStack.delete(w);
+        scc.push(w);
+      } while (w !== v);
+      sccs.push(scc);
     }
   }
 
   for (const v of reachableNodes) {
     if (!indices.has(v)) {
-        strongConnect(v);
+      strongConnect(v);
     }
   }
 
@@ -171,45 +168,48 @@ export function analyzeStory<TEffect>(story: Story<TEffect>): AnalysisResult {
 
     let isLoop = false;
     if (scc.length > 1) {
-        isLoop = true;
+      isLoop = true;
     } else {
-        // Single node, check for self edge
-        const u = scc[0];
-        const neighbors = adjacency.get(u) || [];
-        if (neighbors.includes(u)) {
-            isLoop = true;
-        }
+      // Single node, check for self edge
+      const u = scc[0];
+      const neighbors = adjacency.get(u) || [];
+      if (neighbors.includes(u)) {
+        isLoop = true;
+      }
     }
 
     if (!isLoop) continue;
 
     // Check if any node in SCC is an ending
-    const hasEnding = scc.some(u => terminalNodes.has(u));
+    const hasEnding = scc.some((u) => terminalNodes.has(u));
     if (hasEnding) continue; // Can escape via ending
 
     // Check if any edge leaves the SCC
     let canEscape = false;
     const sccSet = new Set(scc);
     for (const u of scc) {
-        const neighbors = adjacency.get(u) || [];
-        for (const w of neighbors) {
-            if (!sccSet.has(w)) {
-                canEscape = true;
-                break;
-            }
+      const neighbors = adjacency.get(u) || [];
+      for (const w of neighbors) {
+        if (!sccSet.has(w)) {
+          canEscape = true;
+          break;
         }
-        if (canEscape) break;
+      }
+      if (canEscape) break;
     }
 
     if (!canEscape) {
-        issues.push({
-            code: "INESCAPABLE_LOOP",
-            pathExample: scc.map(u => parseUid(u).nodeId),
-            scc: scc.map(u => parseUid(u).nodeId),
-            message: `Inescapable loop detected involving nodes: ${scc.map(u => {
-                 const p = parseUid(u); return `${p.knotId}.${p.nodeId}`;
-            }).join(", ")}`
-        });
+      issues.push({
+        code: 'INESCAPABLE_LOOP',
+        pathExample: scc.map((u) => parseUid(u).nodeId),
+        scc: scc.map((u) => parseUid(u).nodeId),
+        message: `Inescapable loop detected involving nodes: ${scc
+          .map((u) => {
+            const p = parseUid(u);
+            return `${p.knotId}.${p.nodeId}`;
+          })
+          .join(', ')}`,
+      });
     }
   }
 

@@ -1,12 +1,4 @@
-import {
-  Story,
-  StoryRuntime,
-  RuntimeOptions,
-  StepResult,
-  KnotId,
-  NodeId,
-  Choice
-} from "./types";
+import { Story, StoryRuntime, RuntimeOptions, StepResult, KnotId, NodeId, Choice } from './types';
 
 export function createRuntime<TEffect, TState>(
   story: Story<TEffect>,
@@ -35,10 +27,10 @@ export function createRuntime<TEffect, TState>(
     return node;
   }
 
-  function evaluateCondition(condition: Choice<TEffect>["condition"], state: TState): boolean {
+  function evaluateCondition(condition: Choice<TEffect>['condition'], state: TState): boolean {
     if (!condition) return true;
 
-    if (condition.type === "hook") {
+    if (condition.type === 'hook') {
       const hook = options?.conditionHooks?.[condition.name];
       if (hook) {
         return hook(state);
@@ -47,7 +39,7 @@ export function createRuntime<TEffect, TState>(
       // Assuming false for safety, or we could warn.
       console.warn(`Condition hook "${condition.name}" not found.`);
       return false;
-    } else if (condition.type === "expression") {
+    } else if (condition.type === 'expression') {
       const evaluator = options?.expressionEvaluator;
       if (evaluator) {
         return evaluator(condition.expr, state);
@@ -65,7 +57,7 @@ export function createRuntime<TEffect, TState>(
     extraEffects: TEffect[] = []
   ): StepResult<TEffect> {
     const node = getNode(knotId, nodeId);
-    const text = typeof node.text === "string" ? [node.text] : node.text || [];
+    const text = typeof node.text === 'string' ? [node.text] : node.text || [];
     const tags = node.tags || [];
     const ending = node.ending;
 

@@ -1,64 +1,64 @@
 import React, { useState } from 'react';
-import { createRuntime, Story, StepResult } from '@knotwork/core';
+import { createRuntime, Story, StepResult } from '@storyloom/core';
 
 // Example Story
 const exampleStory: Story<{ health?: number; vigor?: number }> = {
   version: 1,
-  entryKnot: "intro",
+  entryKnot: 'intro',
   knots: {
     intro: {
-      id: "intro",
-      entryNode: "start",
+      id: 'intro',
+      entryNode: 'start',
       nodes: {
         start: {
-          id: "start",
-          text: "You wake up in a strange room.",
+          id: 'start',
+          text: 'You wake up in a strange room.',
           choices: [
             {
-              id: "look-around",
-              label: "Look around",
-              target: { node: "look" },
-              effect: { vigor: 1 }
+              id: 'look-around',
+              label: 'Look around',
+              target: { node: 'look' },
+              effect: { vigor: 1 },
             },
             {
-              id: "go-back-to-sleep",
-              label: "Go back to sleep",
-              target: { node: "sleep-ending" },
-              effect: { health: 2 }
-            }
-          ]
+              id: 'go-back-to-sleep',
+              label: 'Go back to sleep',
+              target: { node: 'sleep-ending' },
+              effect: { health: 2 },
+            },
+          ],
         },
         look: {
-          id: "look",
-          text: "You see a door. It is slightly open.",
+          id: 'look',
+          text: 'You see a door. It is slightly open.',
           effect: { vigor: 1 },
           choices: [
             {
-              id: "open-door",
-              label: "Open the door",
-              target: { knot: "hallway", node: "entry" }
-            }
-          ]
+              id: 'open-door',
+              label: 'Open the door',
+              target: { knot: 'hallway', node: 'entry' },
+            },
+          ],
         },
-        "sleep-ending": {
-          id: "sleep-ending",
-          text: "You fall into a dreamless sleep.",
-          ending: { id: "sleep", label: "You chose oblivion" }
-        }
-      }
+        'sleep-ending': {
+          id: 'sleep-ending',
+          text: 'You fall into a dreamless sleep.',
+          ending: { id: 'sleep', label: 'You chose oblivion' },
+        },
+      },
     },
     hallway: {
-      id: "hallway",
-      entryNode: "entry",
+      id: 'hallway',
+      entryNode: 'entry',
       nodes: {
         entry: {
-          id: "entry",
-          text: "You are in a dark hallway.",
-          ending: { id: "to-be-continued", label: "To be continued..." }
-        }
-      }
-    }
-  }
+          id: 'entry',
+          text: 'You are in a dark hallway.',
+          ending: { id: 'to-be-continued', label: 'To be continued...' },
+        },
+      },
+    },
+  },
 };
 
 type GameState = { health: number; vigor: number };
@@ -72,7 +72,7 @@ function App() {
   });
 
   function applyEffects(effects: any[]) {
-    setGameState(prev => {
+    setGameState((prev) => {
       const next = { ...prev };
       for (const eff of effects) {
         if (eff.health != null) next.health += eff.health;
@@ -84,12 +84,12 @@ function App() {
 
   function handleChoice(id: string) {
     try {
-        const nextStep = runtime.choose(id, gameState);
-        applyEffects(nextStep.effects);
-        setStep(nextStep);
+      const nextStep = runtime.choose(id, gameState);
+      applyEffects(nextStep.effects);
+      setStep(nextStep);
     } catch (e) {
-        console.error(e);
-        alert((e as Error).message);
+      console.error(e);
+      alert((e as Error).message);
     }
   }
 
@@ -100,10 +100,12 @@ function App() {
       <div style={{ display: 'flex', gap: '20px' }}>
         <div style={{ flex: 1, border: '1px solid #ccc', padding: '20px' }}>
           <h2>Story</h2>
-          {step.text.map((t, i) => <p key={i}>{t}</p>)}
+          {step.text.map((t, i) => (
+            <p key={i}>{t}</p>
+          ))}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
-            {step.choices.map(c => (
+            {step.choices.map((c) => (
               <button key={c.id} onClick={() => handleChoice(c.id)} style={{ padding: '10px' }}>
                 {c.label}
               </button>
@@ -118,17 +120,17 @@ function App() {
         </div>
 
         <div style={{ width: '300px', border: '1px solid #ccc', padding: '20px' }}>
-            <h2>State</h2>
-            <pre>{JSON.stringify(gameState, null, 2)}</pre>
+          <h2>State</h2>
+          <pre>{JSON.stringify(gameState, null, 2)}</pre>
 
-            <h3>Current Step Debug</h3>
-            <pre style={{ fontSize: '0.8em', overflow: 'auto' }}>
-                {JSON.stringify({ ...step, choices: step.choices.map(c => c.id) }, null, 2)}
-            </pre>
+          <h3>Current Step Debug</h3>
+          <pre style={{ fontSize: '0.8em', overflow: 'auto' }}>
+            {JSON.stringify({ ...step, choices: step.choices.map((c) => c.id) }, null, 2)}
+          </pre>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
