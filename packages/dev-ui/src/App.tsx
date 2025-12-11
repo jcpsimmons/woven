@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createRuntime, Story, StepResult } from '@storyloom/core';
 import { Button, Card, Navbar, NavbarGroup, NavbarHeading } from '@blueprintjs/core';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // Example Story - Prison Escape Adventure
 const exampleStory: Story<{
@@ -576,32 +578,30 @@ function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="bp5-dark app-container">
       {/* Navigation Header */}
-      <Navbar className="app-header">
-        <NavbarGroup>
-          <NavbarHeading>
-            <div>
-              <h1>Storyloom Dev UI</h1>
-              <p>Interactive Storytelling Engine Demo</p>
-            </div>
-          </NavbarHeading>
-        </NavbarGroup>
-        <NavbarGroup align="right" className="header-links">
-          <Button
-            minimal
-            icon="git-repo"
-            text="GitHub Repo"
-            onClick={() => window.open('https://github.com/jcpsimmons/woven', '_blank')}
-          />
-          <Button
-            minimal
-            icon="edit"
-            text="Blog"
-            onClick={() => window.open('https://blog.drjoshcsimmons.com', '_blank')}
-          />
-        </NavbarGroup>
-      </Navbar>
+      <div className="app-header">
+        <div className="header-content">
+          <div className="header-brand">
+            <h1 className="header-title">Storyloom</h1>
+            <p className="header-subtitle">Interactive Storytelling Engine</p>
+          </div>
+          <div className="header-actions">
+            <Button
+              icon="git-repo"
+              text="GitHub"
+              onClick={() => window.open('https://github.com/jcpsimmons/woven', '_blank')}
+              large
+            />
+            <Button
+              icon="edit"
+              text="Blog"
+              onClick={() => window.open('https://blog.drjoshcsimmons.com', '_blank')}
+              large
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="content-wrapper">
         <Card className="story-panel" elevation={2}>
@@ -635,14 +635,34 @@ function App() {
         <Card className="state-panel" elevation={2}>
           <div className="debug-section">
             <h2>State</h2>
-            <pre>{JSON.stringify(gameState, null, 2)}</pre>
+            <SyntaxHighlighter
+              language="json"
+              style={vscDarkPlus}
+              customStyle={{
+                margin: 0,
+                borderRadius: '4px',
+                fontSize: '13px',
+                lineHeight: '1.6',
+              }}
+            >
+              {JSON.stringify(gameState, null, 2)}
+            </SyntaxHighlighter>
           </div>
 
           <div className="debug-section">
             <h3>Current Step Debug</h3>
-            <pre>
+            <SyntaxHighlighter
+              language="json"
+              style={vscDarkPlus}
+              customStyle={{
+                margin: 0,
+                borderRadius: '4px',
+                fontSize: '13px',
+                lineHeight: '1.6',
+              }}
+            >
               {JSON.stringify({ ...step, choices: step.choices.map((c) => c.id) }, null, 2)}
-            </pre>
+            </SyntaxHighlighter>
           </div>
         </Card>
       </div>
