@@ -576,7 +576,56 @@ function App() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Storyloom Dev UI</h1>
+      {/* Navigation Header */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
+          paddingBottom: '15px',
+          borderBottom: '2px solid #ccc',
+        }}
+      >
+        <div>
+          <h1 style={{ margin: 0 }}>Storyloom Dev UI</h1>
+          <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '14px' }}>
+            Interactive Storytelling Engine Demo
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <a
+            href="https://github.com/jcpsimmons/woven"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: '8px 16px',
+              background: '#24292e',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '6px',
+              fontSize: '14px',
+            }}
+          >
+            📦 GitHub Repo
+          </a>
+          <a
+            href="https://blog.drjoshcsimmons.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: '8px 16px',
+              background: '#0969da',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '6px',
+              fontSize: '14px',
+            }}
+          >
+            ✍️ Blog
+          </a>
+        </div>
+      </div>
 
       <div style={{ display: 'flex', gap: '20px' }}>
         <div style={{ flex: 1, border: '1px solid #ccc', padding: '20px' }}>
